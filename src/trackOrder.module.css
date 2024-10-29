@@ -1,0 +1,54 @@
+.container {
+    text-align: center;
+}
+.searchContainer {
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.searchContainer button {
+    margin-top: 25px;
+}
+.dataContainer {
+    margin-left: 45px;
+    text-align: left;
+}
+.dataContainer p {
+    font-weight: 400;
+}
+.trackList , .completed{
+    box-sizing: border-box;
+    padding: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-right: 50px;
+    list-style: none;
+    height: 45px;
+    background-color: rgb(85, 85, 85,.5);
+    border-radius: 3px;
+    justify-content: space-between;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+.trackList h3 , .completed h3 {
+    margin: auto;
+    width: 160px;
+    text-align: left;
+     font-weight: 500;
+}
+.trackList h4 , .completed h4 {
+    margin: auto;
+    width: 150px;
+    text-align: right;
+     font-weight: 500;
+}
+.completed {
+    background-color: rgb(131, 255 , 124,.5);
+}
+.listContainer {
+    margin: auto;
+    text-align: center;
+    list-style-type: none;
+}

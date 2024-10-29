@@ -1,0 +1,32 @@
+.dealsContainer {
+    padding: 0px;
+    width: 100%;
+}
+.dealsLi {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 250px;
+    height: 50px;
+    border-radius: 3px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(85, 85, 85, .5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+.dealsLi p {
+    letter-spacing: .3px;
+    width: 40%;
+    font-size: 16px;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin: auto;
+}
+.discount {
+    text-align: right;
+}
+#deals {
+    box-sizing: border-box;
+    padding: 15px;
+}

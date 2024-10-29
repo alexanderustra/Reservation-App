@@ -1,0 +1,17 @@
+.orderForm ul {
+    padding: 10px;
+}
+
+.orderForm li {
+    margin: auto;
+    list-style: none;
+    margin-left: 0px;
+
+}
+.paymentDiv {
+    margin-bottom: 0px;
+}
+.creditCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
