@@ -1,0 +1,105 @@
+[
+  {
+    "name": "Vegan Burger",
+    "description": "A delicious plant-based burger served with lettuce, tomato, and vegan mayo.",
+    "ingredients": [
+      "plant-based patty",
+      "lettuce",
+      "tomato",
+      "vegan mayo",
+      "whole grain bun"
+    ],
+    "tags": ["vegan", "gluten-free option", "healthy"],
+    "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
+    "category": "Vegan",
+    "price": 12.99,
+    "isDessert": false,
+    "discount":10
+  },
+  {
+    "name": "Chicken Caesar Salad",
+    "description": "Classic Caesar salad with grilled chicken, romaine lettuce, croutons, and parmesan cheese.",
+    "ingredients": [
+      "grilled chicken",
+      "romaine lettuce",
+      "croutons",
+      "parmesan cheese",
+      "Caesar dressing"
+    ],
+    "tags": ["non-vegan", "low-carb"],
+    "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
+    "category": "Non-Vegan",
+    "price": 10.50,
+    "isDessert": false,
+    "discount":20
+  },
+  {
+    "name": "Margherita Pizza",
+    "description": "Traditional Italian pizza with fresh mozzarella, basil, and tomato sauce.",
+    "ingredients": [
+      "pizza dough",
+      "tomato sauce",
+      "fresh mozzarella",
+      "basil",
+      "olive oil"
+    ],
+    "tags": ["vegetarian", "contains gluten"],
+    "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
+    "category": "Vegetarian",
+    "price": 14.00,
+    "isDessert": false,
+    "discount":25
+  },
+  {
+    "name": "Gluten-Free Pancakes",
+    "description": "Fluffy gluten-free pancakes made with almond flour, perfect for a light breakfast.",
+    "ingredients": [
+      "almond flour",
+      "eggs",
+      "baking powder",
+      "almond milk",
+      "maple syrup"
+    ],
+    "tags": ["gluten-free", "dairy-free", "healthy"],
+    "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
+    "category": "Gluten-Free",
+    "price": 8.99,
+    "isDessert": true,
+    "discount":0
+  },
+  {
+    "name": "Spaghetti Bolognese",
+    "description": "Classic Italian pasta dish with a rich and savory beef Bolognese sauce.",
+    "ingredients": [
+      "spaghetti",
+      "ground beef",
+      "tomato sauce",
+      "onion",
+      "garlic",
+      "olive oil"
+    ],
+    "tags": ["non-vegan", "contains gluten"],
+    "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
+    "category": "Non-Vegan",
+    "price": 13.50,
+    "isDessert": false,
+    "discount":0
+  },
+  {
+    "name": "Falafel Wrap",
+    "description": "Crispy falafel balls wrapped in a flatbread with hummus, lettuce, and cucumber.",
+    "ingredients": [
+      "falafel",
+      "flatbread",
+      "hummus",
+      "lettuce",
+      "cucumber"
+    ],
+    "tags": ["vegan", "vegetarian", "dairy-free"],
+    "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
+    "category": "Vegan",
+    "price": 9.50,
+    "isDessert": false,
+    "discount":0
+  }
+]
