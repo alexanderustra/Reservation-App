@@ -4,5 +4,30 @@
     flex-wrap: wrap;
 }
 .reservationModal {
-    background-color: red;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color:  rgb(131, 255 , 124,.5);
+    padding: 15px;
+    padding-bottom: 0px;
+}
+.cancelBtn {
+    background-color: #FF3D3D;
+    color: #FFFFFF;
+}
+.reservationModal h2 {
+    margin: 0px;
+    font-size: 18px;
+}
+.reservationModal p {
+    margin: 0px;
+    margin-top: 15px;
+}
+.timeContainer , .seatsContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.seatsContainer  {
+    width: 48%;
 }

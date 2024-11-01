@@ -77,6 +77,7 @@ function TrackOrder() {
     };
     const handleInputChange = (id:string ,value:string)=>{
         setSearchedId(value)
+        console.log(id + orderPlaced)
     }
     const handleSearch = () => {
         if (orderInfo && searchedId == orderInfo.id) {
@@ -102,12 +103,12 @@ function TrackOrder() {
                 <button onClick={handleSearch}>Search</button>
             </div>
             <h3>No Order Finded</h3>
-            <button><Link to="/">Home</Link></button>
+            <button><Link to="/Reservation-App/">Home</Link></button>
         </div>; 
     }
     return (
         <div className={styles.container}>
-            <h1>TrackOrder</h1>
+            <h1 id='title'>TrackOrder</h1>
             <div className={styles.searchContainer}>
                 <Input
                     width="185px"
@@ -150,7 +151,7 @@ function TrackOrder() {
                     </div>
                 </li>
             </ul>
-            <button><Link to="/">Home</Link></button>
+            <button><Link to="/Reservation-App/">Home</Link></button>
         </div>
     );
 }

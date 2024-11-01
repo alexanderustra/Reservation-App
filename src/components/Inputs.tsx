@@ -1,5 +1,5 @@
 import styles from './inputs.module.css'
-import React, { useState } from 'react';
+import React from 'react';
 
 interface InputsProps {
     labelTop?:boolean
@@ -11,6 +11,7 @@ interface InputsProps {
     label?: string;
     type?: string; 
     placeholder?: string;
+    numberType?:boolean
     onChange: (id: string, value: string) => void;
 }
 
@@ -24,7 +25,8 @@ function Input({
     id,
     value,
     onChange,
-    errorMsg
+    errorMsg,
+    numberType,
 }: InputsProps) {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,10 +35,18 @@ function Input({
 
     return (
         <div  className={labelTop ? styles.inputTop : styles.input}>
-            {label && <label className={labelTop ? styles.labelTop : styles.label} htmlFor={id}
-            style={valid ? {color:'#FFFFFF'} : {color:'#A30000'}}
-            > { valid ? label : errorMsg}
-            </label>}
+            {label && (
+                <label
+                    className={labelTop ? styles.labelTop : styles.label}
+                    htmlFor={id}
+                    style={{
+                        color: valid ? '#FFFFFF' : '#A30000',
+                        paddingLeft: numberType ? '10px' : '0px',
+                    }}
+                >
+                    {valid ? label : errorMsg}
+                </label>
+            )}
             
             <input 
                 style={{ 
@@ -53,51 +63,4 @@ function Input({
     );
 }
 
-
-interface SelectProps {
-    label?:string
-    placeholder?: string;
-    onSelect?: (value: string) => void;
-    children: React.ReactNode;
-}
-
-
-
-function Select({ placeholder, onSelect, children , label}: SelectProps) {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState<string | undefined>(placeholder);
-
-    const handleOptionClick = (value: string) => {
-        setSelectedValue(value);
-        setIsOpen(false);
-        if (onSelect) {
-            onSelect(value);
-        }
-    };
-
-    return (
-        <div className={styles.selectContainer}>
-            {label && (
-                <p className={styles.label}>{label}</p>
-            )}
-            <div className={styles.select} role="listbox" aria-expanded={isOpen} onClick={() => setIsOpen(!isOpen)}>
-                <p>{selectedValue || placeholder || ''}</p>
-                {isOpen && (
-                    <ul>
-                        {React.Children.map(children, (child) => {
-                            const option = child as React.ReactElement;
-                            return (
-                                <li key={option.props.value} onClick={() => handleOptionClick(option.props.value)}>
-                                    {option.props.children}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                )}
-            </div>
-        </div>
-    );
-    
-}
 export default Input;
-export { Select };

@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from './components/Inputs';
 import { useNavigate ,useLocation} from 'react-router-dom';
 
@@ -30,12 +29,11 @@ function DeliveryPayment() {
     cvv: ''
   });
   
-  useEffect(()=>{
-    console.log(previousPage)
-    const orderInfo = localStorage.getItem('finalOrder')
-    const cartInfo = localStorage.getItem('cart')
-    const paymentMethod = localStorage.getItem('orderMethod')
-  },[])
+  //useEffect(()=>{
+    //const orderInfo = localStorage.getItem('finalOrder')
+    //const cartInfo = localStorage.getItem('cart')
+    //const paymentMethod = localStorage.getItem('orderMethod')
+  //},[])
 
   const handleInputChange = (id: string, value: string | number) => {
     setPaymentInfo((prevState) => {

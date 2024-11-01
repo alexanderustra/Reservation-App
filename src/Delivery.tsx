@@ -43,7 +43,7 @@ const FoodList: React.FC = () => {
 
   return (
     <div>
-        <Link to="/"><button>Home</button></Link>
+        <Link to="/Reservation-App/"><button>Home</button></Link>
       <h1>Food List by Category</h1>
       {Object.keys(categorizedFoods).map((category) => (
         <div key={category}>

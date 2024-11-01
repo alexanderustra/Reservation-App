@@ -31,15 +31,17 @@ function App() {
 function Navigation() {
   const location = useLocation();
 
-  if (location.pathname !== "/") {
+  if (location.pathname !== "/Reservation-App/") {
     return null; 
   }
-
+  const cartItems = JSON.parse(localStorage.getItem('cart') || '[]') as any[];
   return (
     <nav >
-      <h1 id='title'>Restaurant Name</h1>
+      <div id='titleCartContainer'>
+        <h1 id='restaurantName'>Restaurant Name</h1>
+        <Link  className='homeLink' id='cartBtn' to="/cart"><CartSvg/><p id='cartNumber'>{cartItems.length}</p></Link>
+      </div>
       <ul id='homeNav'>
-        <Link  className='homeLink' id='cartBtn' to="/cart"><CartSvg/></Link>
         <div className='linkContainer'>
           <Link  className='homeLink' to="/booking"><BookingSvg /><h2>Booking</h2></Link>
           <Link  className='homeLink' to="/deals"><DealsSvg/> <h2>Deals</h2></Link>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import style from './cart.module.css'
 import { DessertSvg, FoodSvg } from './components/Svgs';
 import { useNavigate } from 'react-router-dom';
@@ -125,16 +124,18 @@ function Cart() {
                         <h3 className={style.price}>{item.cuantity}</h3>
                     </li>
                 ))}
+                <p>Total : {totalPrice}</p>
             </ul>
-            <p>Total : {totalPrice}</p>
-            {cart.length > 0 ? <button onClick={handleCompleteOrder}>Complete Order</button> : ''}
+            
             {openModal && foodToEdit && (
                 <FoodModal foodToEdit={foodToEdit} index={cart.findIndex(item => item.name === foodToEdit.name)} />
             )}
-
-            <button>
-                <Link to="/">Home</Link>
-            </button>
+            <div className={style.buttonsContainer}>
+                {cart.length > 0 ? <button onClick={handleCompleteOrder}>Request</button> : ''}
+                <button onClick={()=> navigate('/Reservation-App/')}>
+                    Home
+                </button>
+            </div>
         </>
     );
 }
