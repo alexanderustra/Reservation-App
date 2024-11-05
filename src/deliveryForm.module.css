@@ -1,17 +1,61 @@
+.orderForm {
+    box-sizing: border-box;
+    padding: 15px;
+    padding-bottom: 0px;
+    text-align: left;
+}
+.orderForm h2{
+    font-size: 18px;
+    text-align: center;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.orderForm p{
+    font-size: 16px;
+    margin: 0px;
+   
+}
+.orderForm h3{
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
 .orderForm ul {
-    padding: 10px;
+    box-sizing: border-box;
+    padding-left: 25px;
 }
 
 .orderForm li {
+    font-size: 16px;
     margin: auto;
     list-style: none;
     margin-left: 0px;
+    margin-top: 8px;
+    margin-bottom: 0px;
 
 }
+.buttonsContainer {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+/*-------------------PAYMENT------------------------*/
 .paymentDiv {
+    margin-top: 0px;
     margin-bottom: 0px;
 }
 .creditCardContainer {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.paymentSelector {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    width: fit-content;
+    height:28px ;
 }

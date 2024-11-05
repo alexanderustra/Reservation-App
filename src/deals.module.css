@@ -1,3 +1,8 @@
+.deals {
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+}
 .dealsContainer {
     box-sizing: border-box;
     padding-left: 24px;
@@ -5,6 +10,7 @@
     width: 100%;
 }
 .dealsLi {
+    text-align: left;
     font-size: 18px;
     display: flex;
     flex-wrap: nowrap;
@@ -24,7 +30,7 @@
     width: 40%;
     margin-top: 15px;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 200;
     color: #FFFFFF;
 }
 .discount {

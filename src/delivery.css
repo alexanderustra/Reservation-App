@@ -1,62 +1,92 @@
 .foodContainer {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    padding-left: 24px;
+    margin-left: -24px;
     display: flex;
     flex-wrap: nowrap;
+    min-height: 230px;
+    height: fit-content;
+    overflow-x: scroll; 
+    overflow-y: hidden;
 }
 .food {
-    overflow: hidden;
+    margin: 0px;
     margin-right: 20px;
     list-style: none;
-    width: 150px;
-    height: 180px;
-    font-size: 13px;
+    width: 186px;
+    height: 196px;
+    font-size: 18px;
+}
+.categoryH2 {
+    text-align: left;
+    font-weight: 200;
+    text-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+}
+
+.food h3 {
+    font-weight: 200;
+    text-align: left;
+    width: 100%;
+    overflow: auto;
+    white-space: nowrap;
+    font-size: 18px;
+    margin: 0px;
+    margin-bottom: 8px;
+    text-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+}
+.foodContent {
+    width: 186px;
+    height: fit-content;
+    font-size: 16px;
     border-radius: 3px;
+    overflow: hidden;
     background: rgba(85, 85, 85, .5);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 .food img {
     object-fit:cover;
-    width: 150px;
-    height: 110px;
+    width: 100%;
+    height: 117px;
     border-radius: 3px 3px 0px 0px;
 }
-.foodNameContainer {
+.foodPriceContainer {
+    margin-left: 5px;
+    width: fit-content;
+    font-size: 18px;
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-between;
 }
-.foodNameContainer h3 {
-    font-size: 15px;
+.foodPriceContainer h3 {
+    width: fit-content;
+    box-sizing: border-box;
+    padding-right: 3px;
+    font-size: 18px;
     margin: 0px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-right: 10px;
+    margin-top: 8px;
 }
 .price {
     white-space: nowrap;
 }
-.tags , .tags2 {
+.tags {
     color: #FFFFFF;
     font-family: 'Lato', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    width: 200px;
-    height: 18px;
-    overflow: hidden;
-    margin: auto;
-    margin-top: 5px;
-    margin-left: 160px;
+    font-weight: 400;
+    font-size: 16px;
+    width: 94%;
+    height: fit-content;
+    overflow-x: scroll; 
+    overflow-y: hidden;
+    margin: 5px;
+    margin-top: 3px;
+    margin-bottom: 8px;
     white-space: nowrap;
-    animation: scroll 8s linear infinite;
+    text-align: left;
 }
-.tags2 {
-    margin-left: 370px;
-    margin-top: -19px;
-    animation: scroll 8s linear infinite;
+.discount {
+    margin-left: 10px;
+    color: #00FF2F;
 }
-@keyframes scroll {
-    0% {
-        transform: translateX(0%); 
-      }
-      100% {
-        transform: translateX(-280%); 
-      }
-      
-  }

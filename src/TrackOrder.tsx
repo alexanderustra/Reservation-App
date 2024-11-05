@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Input from './components/Inputs';
 import  styles from './trackOrder.module.css'
+import { BikeSvg, HouseSvg, NoteSvg, SaladSvg, SearchIcon, TrackOrderSvg } from './components/Svgs';
 
 interface orderInfoProps {
     name: string;    
@@ -12,6 +13,7 @@ interface orderInfoProps {
 }
 
 function TrackOrder() {
+    const navigate = useNavigate();
     const [searchedId,setSearchedId] = useState('')
     const [orderPlaced, setOrderPlaced] = useState<string | boolean>('');
     const [noId,setNoId] = useState(false)
@@ -86,32 +88,14 @@ function TrackOrder() {
             setNoId(true);   
         }
     };
-    
+    const paymentInfo =  JSON.parse(localStorage.getItem('paymentInfo') || '{}')
+
     if (!orderInfo || noId ) {
-        return <div>
-            <h1>TrackOrder</h1>
-            <div className={styles.searchContainer}>
-                <Input
-                    width="185px"
-                    id='email'
-                    type='text'
-                    placeholder='Order ID'
-                    valid={true}
-                    value={searchedId}
-                    onChange={handleInputChange}
-                />
-                <button onClick={handleSearch}>Search</button>
-            </div>
-            <h3>No Order Finded</h3>
-            <button><Link to="/Reservation-App/">Home</Link></button>
-        </div>; 
-    }
-    return (
-        <div className={styles.container}>
+        return <div id='formContainer'>
             <h1 id='title'>TrackOrder</h1>
             <div className={styles.searchContainer}>
                 <Input
-                    width="185px"
+                    width="78%"
                     id='email'
                     type='text'
                     placeholder='Order ID'
@@ -119,7 +103,26 @@ function TrackOrder() {
                     value={searchedId}
                     onChange={handleInputChange}
                 />
-                <button onClick={handleSearch}>Search</button>
+                <button onClick={handleSearch}><SearchIcon/></button>
+            </div>
+            <h3>No Order Finded</h3>
+            <button onClick={()=>navigate('/Reservation-App/')}>Home</button>
+        </div>; 
+    }
+    return (
+        <div className={styles.container} id='formContainer'>
+            <h1 id='title'>TrackOrder</h1>
+            <div className={styles.searchContainer}>
+                <Input
+                    width="78%"
+                    id='search'
+                    type='text'
+                    placeholder='Order ID'
+                    valid={true}
+                    value={searchedId}
+                    onChange={handleInputChange}
+                />
+                <button onClick={handleSearch}><SearchIcon/></button>
             </div>
             <div className={styles.dataContainer}>
                 <p>OrderID: {orderInfo.id}</p>
@@ -128,30 +131,41 @@ function TrackOrder() {
             <ul className={styles.listContainer}>
                 <li>
                     <div className={times.placed ? styles.completed : styles.trackList}>
+                        <NoteSvg/>
                         <h3>Order Placed</h3>
                         <h4 className={styles.timer} >{times.placed ? 'Completed' : '...'}</h4>
                     </div>
                 </li>
                 <li>
                     <div className={times.preparing ? styles.completed : styles.trackList}>
+                        <SaladSvg/>
                         <h3>Preparing Order</h3>
                         <h4 className={styles.timer}>{times.preparing ? 'Completed' : '...'}</h4>
                     </div>
                 </li>
                 <li>
                     <div className={times.delivering ? styles.completed : styles.trackList}>
+                        <BikeSvg/>
                         <h3>Delivering</h3>
                         <h4 className={styles.timer}>{times.delivering ? 'Completed' : '...'}</h4>
                     </div>
                 </li>
                 <li>
                     <div className={times.delivered ? styles.completed : styles.trackList}>
+                        <HouseSvg/>
                         <h3>Delivered</h3>
                         <h4 className={styles.timer}>{times.delivered ? 'Completed' : '...'}</h4>
                     </div>
                 </li>
             </ul>
-            <button><Link to="/Reservation-App/">Home</Link></button>
+            <div className={styles.deliveryAdress}>
+                <TrackOrderSvg/>
+                <div>
+                    <h3>Delivery Adress</h3>
+                    <h3>{paymentInfo.deliverTo}</h3>
+                </div>
+            </div>
+            <button onClick={()=> navigate('/Reservation-App/')}>Home</button>
         </div>
     );
 }

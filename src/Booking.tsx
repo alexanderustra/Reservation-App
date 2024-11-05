@@ -3,11 +3,20 @@ import { Link } from 'react-router-dom';
 import Input from './components/Inputs';
 import style from './booking.module.css';
 
+type ErrorList = {
+  name?: string;
+  date?: string;
+  phone?: string;
+  start?: string;
+  end?: string;
+  adults?: string;
+  [key: string]: string | undefined;
+};
 const generateRandomId = () => Math.floor(10000 + Math.random() * 90000);
 
 function Booking() {
   const [confirmed, setConfirmed] = useState(false);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<ErrorList>({}); 
   const [bookingInfo, setBookingInfo] = useState({
     date: '',
     time: { start: '', end: '' },
@@ -53,19 +62,69 @@ function Booking() {
       }
     });
   };
+  
 
   const validateInputs = () => {
-    const errorList: string[] = [];
-    if (!bookingInfo.name) errorList.push('name');
-    if (!bookingInfo.date) errorList.push('date');
-    if (!bookingInfo.phone) errorList.push('phone');
-    if (!bookingInfo.time.start) errorList.push('start');
-    if (!bookingInfo.time.end) errorList.push('end');
-    if (!bookingInfo.seats.adults) errorList.push('adults');
-    if (Number(bookingInfo.time.start) >= Number(bookingInfo.time.end)) errorList.push('start');
+    const errorList: ErrorList = {};
+
+    function timeToMinutes(time:any) {
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
+    }
+    const MIN_TIME = timeToMinutes("08:00"); 
+    const MAX_TIME = timeToMinutes("23:00"); 
+
+    function isValidTime(time:any) {
+        const timeInMinutes = timeToMinutes(time);
+        return timeInMinutes >= MIN_TIME && timeInMinutes <= MAX_TIME;
+    }
+    const today = new Date();
+    const todayString = today.toISOString().split("T")[0]; 
+    const currentHours = today.getHours();
+    const currentMinutes = today.getMinutes();
+    const currentTimeInMinutes = currentHours * 60 + currentMinutes;
+
+    if (!bookingInfo.name) errorList['name'] = 'A name is required.';
+    if (!bookingInfo.date) errorList['date'] = 'Please select a date.';
+    if (!bookingInfo.phone) errorList['phone'] = 'Phone number is required.';
+    if (!bookingInfo.seats.adults) errorList['adults'] = 'Please specify the number of adults.';
+
+    if ((Number(bookingInfo.seats.adults) + Number(bookingInfo.seats.kids)) > 12) {
+        errorList['adults'] = 'Total seats cannot exceed 10.';
+    }
+
+    if (!bookingInfo.time.start) {
+        errorList['start'] = 'Start time is required.';
+    } else if (!isValidTime(bookingInfo.time.start)) {
+        errorList['start'] = 'Start time must be between 8:00 AM and 11:00 PM.';
+    }
+
+    if (!bookingInfo.time.end) {
+        errorList['end'] = 'End time is required.';
+    } else if (!isValidTime(bookingInfo.time.end)) {
+        errorList['end'] = 'End time must be between 8:00 AM and 11:00 PM.';
+    }
+
+    if (
+        bookingInfo.time.start &&
+        bookingInfo.time.end &&
+        timeToMinutes(bookingInfo.time.start) >= timeToMinutes(bookingInfo.time.end)
+    ) {
+        errorList['start'] = 'Start time must be earlier than end time.';
+        errorList['end'] = 'End time must be later than start time.';
+    }
+    if (bookingInfo.date < todayString) {
+      errorList['date'] = 'The date must be in the future.';
+  } else if (bookingInfo.date === todayString) {
+      // Validar que la hora de inicio sea futura
+      const startTimeInMinutes = timeToMinutes(bookingInfo.time.start);
+      if (startTimeInMinutes <= currentTimeInMinutes) {
+          errorList['start'] = 'Start time must be in the future.';
+      }
+  }
 
     setErrors(errorList);
-    return errorList.length === 0;
+    return Object.keys(errorList).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -100,62 +159,63 @@ function Booking() {
         className={style.form}
       >
         <Input
-          errorMsg="A name is needed"
+          errorMsg={errors['name'] || null} 
           labelTop
-          width="95%"
+          width="100%"
           id="name"
           label="Name"
           type="text"
-          valid={!errors.includes('name')}
+          valid={!errors['name']}
           value={bookingInfo.name}
           onChange={handleInputChange}
         />
         <Input
-          errorMsg="Need phone number"
+          errorMsg={errors['phone'] || null}
           labelTop
-          width="95%"
+          width="100%"
           id="phone"
           label="Phone"
-          type="text"
-          valid={!errors.includes('phone')}
+          type="number"
+          valid={!errors['phone']}
           value={bookingInfo.phone}
           onChange={handleInputChange}
         />
         <div className={style.timeContainer}>
           <Input
-            errorMsg="Select a valid Date"
+            errorMsg={errors['date'] || null}
             labelTop
             width="165px"
             id="date"
             label="Date"
-            type="text"
-            placeholder="mm/dd"
-            valid={!errors.includes('date')}
+            type="date" 
+            placeholder="dd/mm"
+            valid={!errors['date']}
             value={bookingInfo.date}
             onChange={handleInputChange}
           />
           <Input
-            errorMsg="Select a valid Start Time"
+            errorMsg={errors['start'] || null}
             numberType
             labelTop
-            width="55px"
+            width="80px"
             id="start"
             label="Time"
             placeholder="Start"
-            type="number"
-            valid={!errors.includes('start')}
+            type="time"
+            valid={!errors['start']}
             value={bookingInfo.time.start}
             onChange={handleInputChange}
           />
           <Input
-            errorMsg="Select a valid End Time"
+            errorMsg={errors['end'] || null}
             labelTop
+            numberType
             label="End"
-            width="55px"
+            width="80px"
             id="end"
             placeholder="End"
-            type="number"
-            valid={!errors.includes('end')}
+            type="time"
+            valid={!errors['end']}
             value={bookingInfo.time.end}
             onChange={handleInputChange}
           />
@@ -163,25 +223,27 @@ function Booking() {
 
         <div className={style.seatsContainer}>
           <Input
-            errorMsg="At least one Adult"
+            errorMsg={errors['adults'] || null}
             labelTop
-            width="55px"
+            width="80px"
             id="adults"
             label="Seats"
             placeholder="Adults"
             type="number"
-            valid={!errors.includes('adults')}
+            valid={!errors['adults']}
             value={bookingInfo.seats.adults}
             onChange={handleInputChange}
           />
           <Input
+          errorMsg={errors['kids'] || null}
+          numberType
             labelTop
-            width="55px"
+            width="80px"
             id="kids"
             label="Kids"
             placeholder="Kids"
             type="number"
-            valid={!errors.includes('kids')}
+            valid={!errors['kids']}
             value={bookingInfo.seats.kids}
             onChange={handleInputChange}
           />

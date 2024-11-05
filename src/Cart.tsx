@@ -12,22 +12,9 @@ interface CartItem {
     discount:number;
 }
 
-interface Food {
-    name: string;
-    description: string;
-    ingredients: string[];
-    tags: string[];
-    image: string;
-    category: string;
-    price: number;
-    discount:number
-}
-
 function Cart() {
     const navigate = useNavigate()
     const [cart, setCart] = useState<CartItem[]>([]);
-    const [foodToEdit, setFoodToEdit] = useState<Food | null>(null);
-    const [openModal, setOpenModal] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
@@ -47,78 +34,17 @@ function Cart() {
           setTotalPrice(parseFloat(total.toFixed(2)));
     }, [cart]);
 
-    const handleEdit = (index: number, e: React.MouseEvent) => {
-        e.preventDefault();
-        const foodName = cart[index].name;
-
-        fetch('/foods.json')
-        .then((response) => response.json())
-        .then((data: Food[]) => {
-          const foundFood = data.find((food) => food.name === foodName);
-          if (foundFood) {
-            setFoodToEdit(foundFood);
-            setOpenModal(true);
-          } else {
-            console.log('Food not found in the JSON');
-          }
-        })
-        .catch((error) => console.error('Error fetching the JSON file:', error));
-    };
-
-    const toggleIngredient = (ingredientName: string) => {
-        if (foodToEdit) {
-            setFoodToEdit({
-                ...foodToEdit,
-                ingredients: foodToEdit.ingredients.map((ing) =>
-                    ing === ingredientName ? `❌${ing}` : ing
-                ),
-            });
-        }
-    };
-
-    const handleDelete = (index: number) => {
-        const updatedCart = cart.filter((_, i) => i !== index); 
-        setCart(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        setOpenModal(false);
-    };
     const handleCompleteOrder =()=>{
         navigate('/deliveryPayment', { state: { from: location.pathname }})
         localStorage.setItem('orderMethod', 'fromCart')
     }
-
-    const FoodModal = ({ foodToEdit, index }: { foodToEdit: Food, index: number }) => {
-        return (
-            <form>
-                <h2>{foodToEdit.name}</h2>
-                <p>{foodToEdit.description}</p>
-                <h3>Ingredients:</h3>
-                <ul>
-                    {foodToEdit.ingredients.map((ing, index) => (
-                        <li
-                            key={index}
-                            onClick={() => toggleIngredient(ing)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <span>{ing}</span>
-                        </li>
-                    ))}
-                </ul>
-    
-                <p>Price: ${ foodToEdit.price  * (1 - foodToEdit.discount / 100)}</p>
-    
-                <button type="button" onClick={() => setOpenModal(false)}>Close</button>
-                <button type="button" onClick={() => handleDelete(index)}>Delete</button>
-            </form>
-        );
-    };
     
     return (
-        <>  
+        <div id='formContainer'>  
             <h1 id='title'>Cart</h1>
             <ul className={style.cartContainer}>
                 {cart.map((item, index) => (
-                    <li key={index} onClick={(e) => handleEdit(index, e)}>
+                    <li key={index}>
                         {item.isDessert ? <DessertSvg/> : <FoodSvg/>}
                         <h3 className={style.name}>{item.name}</h3>
                         <h3 className={style.price}>{item.cuantity}</h3>
@@ -126,17 +52,13 @@ function Cart() {
                 ))}
                 <p>Total : {totalPrice}</p>
             </ul>
-            
-            {openModal && foodToEdit && (
-                <FoodModal foodToEdit={foodToEdit} index={cart.findIndex(item => item.name === foodToEdit.name)} />
-            )}
             <div className={style.buttonsContainer}>
                 {cart.length > 0 ? <button onClick={handleCompleteOrder}>Request</button> : ''}
                 <button onClick={()=> navigate('/Reservation-App/')}>
                     Home
                 </button>
             </div>
-        </>
+        </div>
     );
 }
 

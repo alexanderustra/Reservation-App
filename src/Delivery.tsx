@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { foodsJson } from './components/foods';
+import { useNavigate } from 'react-router-dom'; 
 import './delivery.css'
 
 interface Food {
@@ -14,18 +15,11 @@ interface Food {
 }
 
 const FoodList: React.FC = () => {
+  const navigate = useNavigate()
   const [foods, setFoods] = useState<Food[]>([]);
 
   useEffect(() => {
-    fetch('/foods.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data: Food[]) => setFoods(data))
-      .catch(error => console.error('Error fetching the JSON file:', error));
+    setFoods(foodsJson)
   }, []);
 
   const categorizeFoods = () => {
@@ -38,36 +32,36 @@ const FoodList: React.FC = () => {
       return categories;
     }, {});
   };
-
+  
   const categorizedFoods = categorizeFoods();
 
   return (
-    <div>
-        <Link to="/Reservation-App/"><button>Home</button></Link>
-      <h1>Food List by Category</h1>
+    <div id='formContainer' style={{paddingRight:'0px',}}>
+      <h1 id='title'>Delivery</h1>
       {Object.keys(categorizedFoods).map((category) => (
         <div key={category}>
-          <h2>{category}</h2>
+          <h2 className='categoryH2'>{category}</h2>
           <ul className='foodContainer'>
             {categorizedFoods[category].map((food, index) => (
-              <Link to="/deliveryOrder" key={index}>
-                <li className='food' onClick={()=>{
+                <li key={index} className='food' onClick={()=>{
+                    navigate('/deliveryOrder')
                     localStorage.setItem('foodName',food.name)
                 }}>
-                  <img src={food.image} alt={food.name}  />
-                  <div className='foodNameContainer'>
-                    <h3>{food.name}</h3>
-                    <h3 className={food.discount ? 'discountedPrice' : 'price'}>$ {food.discount > 0 ? (food.price * (1 - food.discount / 100)).toFixed(2) : food.price.toFixed(2)}</h3>
-                    {food.discount >= 0 ? <h3 className='discount'>{food.discount} %</h3> : '' }
+                  <h3>{food.name}</h3>
+                  <div className='foodContent'>
+                    <img src={food.image} alt={food.name} />
+                    <div className='foodPriceContainer'>
+                      <h3 className={food.discount ? 'discountedPrice' : 'price'}>$ {food.discount > 0 ? (food.price * (1 - food.discount / 100)).toFixed(2) : food.price.toFixed(2)}</h3>
+                      {food.discount > 0 ? <h3 className='discount'>{food.discount} %</h3> : '' }
+                    </div>
+                    <p className='tags'>{food.tags.join(', ')}</p>
                   </div>
-                  <p className='tags'>{food.tags.join(', ')}</p>
-                  <p className='tags2'>{food.tags.join(', ')}</p>
                 </li>
-              </Link>
             ))}
           </ul>
         </div>
       ))}
+      <button onClick={()=>navigate('/Reservation-App/')}>Home</button>
     </div>
   );
 };

@@ -7,7 +7,7 @@ interface InputsProps {
     value:string | number
     id: string;
     valid: boolean;
-    errorMsg?:string;
+    errorMsg?: string | null;
     label?: string;
     type?: string; 
     placeholder?: string;
@@ -34,14 +34,18 @@ function Input({
     };
 
     return (
-        <div  className={labelTop ? styles.inputTop : styles.input}>
+        <div  className={labelTop ? styles.inputTop : styles.input}
+        style={{
+            width: width,
+            marginLeft: numberType ? '8px' : '0px',
+            marginRight: numberType ? '8px' : '0px',}}>
             {label && (
                 <label
                     className={labelTop ? styles.labelTop : styles.label}
                     htmlFor={id}
                     style={{
                         color: valid ? '#FFFFFF' : '#A30000',
-                        paddingLeft: numberType ? '10px' : '0px',
+                        marginLeft: numberType ? '8px' : '0px',
                     }}
                 >
                     {valid ? label : errorMsg}
@@ -51,7 +55,6 @@ function Input({
             <input 
                 style={{ 
                     backgroundColor: valid ? "#000000" : "#530909",
-                    width: width
                 }} 
                 value={value}
                 onChange={handleInputChange} 

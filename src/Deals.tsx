@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import style from './deals.module.css'
 function Deals () {
+    const navigate = useNavigate()
     return (
-        <div id='deals'>
+        <div className={style.deals}>
             <h1 id='title'>Deals</h1>
             <ul className={style.dealsContainer}>
             <p>Discounts</p>
                 <li className={style.dealsLi}><p>Pizzas </p><p className={style.discount}> 30% Off</p></li>
                 <li className={style.dealsLi}><p>Hamburguers </p><p className={style.discount}> 30% Off</p></li>
             </ul>
-            <button><Link to="/Reservation-App/">Home</Link></button>
+            <button onClick={()=>navigate('/Reservation-App/')}>Home</button>
         </div>
     )
 }

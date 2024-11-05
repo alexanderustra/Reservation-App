@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
 import Input from './components/Inputs';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { foodsJson } from './components/foods';
 
 import styles from './deliveryForm.module.css'
+import { CrossIcon, PlusIcon } from './components/Svgs';
 
 interface Food {
   name: string;
@@ -36,10 +37,7 @@ function DeliveryOrder () {
 
   useEffect(() => {
     if (foodName) {
-      fetch('/foods.json')
-        .then((response) => response.json())
-        .then((data: Food[]) => {
-          const foundFood = data.find((food) => food.name === foodName);
+          const foundFood = foodsJson.find((food) => food.name === foodName);
           if (foundFood) {
             setFinalPrice(foundFood.price * (1 - foundFood.discount / 100))
             setFoodDetails(foundFood);
@@ -49,8 +47,6 @@ function DeliveryOrder () {
           } else {
             console.log('Food not found in the JSON');
           }
-        })
-        .catch((error) => console.error('Error fetching the JSON file:', error));
     }
   }, [foodName]);
 
@@ -129,8 +125,8 @@ function DeliveryOrder () {
   };
   console.log('final ' + finalPrice)
   return (
-    <div>
-      <h1>Delivery</h1>
+    <div  id='formContainer'>
+      <h1 id='title'>Delivery</h1>
       <form action="" className={styles.orderForm}>
         <h2>{foodName}</h2>
         <p>{foodDetails?.description}</p>
@@ -143,16 +139,16 @@ function DeliveryOrder () {
                 {ing.name}
               </span>
               <span style={{ color: ing.active ? 'red' : 'green', marginLeft: '10px' }}>
-                {ing.active ? '❌' : '➕'}
+                {ing.active ? <CrossIcon/> : <PlusIcon/>}
               </span>
             </li>
           ))}
         </ul>
 
         <p>Product Price: ${foodDetails? foodDetails.price * (1 - foodDetails.discount / 100) : 1}</p>
-        <p>Final Price : ${finalPrice}</p>
-        
         <Input 
+          labelTop
+          width='90px'
           id='cuantity'
           label='Cuantity'
           type='number'
@@ -160,15 +156,18 @@ function DeliveryOrder () {
           value={cuantity}
           onChange={handleInputChange}
         />
-
-        <button type="button" onClick={handleRequest}>Request</button>
-        <button type="button" onClick={handleCart}>Cart</button>
+        <p style={{fontSize:'18px', marginTop:'15px'}}>Final Price : ${finalPrice}</p>
+        <div className={styles.buttonsContainer}>
+          <button type="button" onClick={handleRequest}>Request</button>
+          <button type="button" onClick={handleCart}>Cart</button>
+        </div>
         
       </form>
-      <button>
-        <Link to="/delivery">Go Back</Link>
+      <button onClick={()=>navigate('/delivery')}>
+        Go Back
       </button>
     </div>
+    
   );
 }
 export default DeliveryOrder;

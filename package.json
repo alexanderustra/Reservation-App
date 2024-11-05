@@ -1,8 +1,9 @@
 {
   "name": "reservation-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "homepage": "https://alexanderustra.github.io/Reservation-App/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -18,6 +19,7 @@
     "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
+    "@types/node": "^22.8.6",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
