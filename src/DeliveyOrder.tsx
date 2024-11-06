@@ -111,6 +111,7 @@ function DeliveryOrder () {
     existingCart.push(newOrder);
     console.log(existingCart)
     localStorage.setItem('cart', JSON.stringify(existingCart));
+    localStorage.setItem('openModalCart',JSON.stringify(true))
     navigate('/delivery'); 
   };
   
@@ -123,7 +124,7 @@ function DeliveryOrder () {
       )
     );
   };
-  console.log('final ' + finalPrice)
+  
   return (
     <div  id='formContainer'>
       <h1 id='title'>Delivery</h1>
@@ -147,6 +148,7 @@ function DeliveryOrder () {
 
         <p>Product Price: ${foodDetails? foodDetails.price * (1 - foodDetails.discount / 100) : 1}</p>
         <Input 
+          min={1}
           labelTop
           width='90px'
           id='cuantity'

@@ -113,10 +113,18 @@ function Booking() {
         errorList['start'] = 'Start time must be earlier than end time.';
         errorList['end'] = 'End time must be later than start time.';
     }
+
+    if (
+      bookingInfo.time.start &&
+      bookingInfo.time.end &&
+      timeToMinutes(bookingInfo.time.end) - timeToMinutes(bookingInfo.time.start) < 30
+    ) {
+      errorList['end'] = 'End time must be at least 30 minutes after the start time.';
+    }
+
     if (bookingInfo.date < todayString) {
       errorList['date'] = 'The date must be in the future.';
   } else if (bookingInfo.date === todayString) {
-      // Validar que la hora de inicio sea futura
       const startTimeInMinutes = timeToMinutes(bookingInfo.time.start);
       if (startTimeInMinutes <= currentTimeInMinutes) {
           errorList['start'] = 'Start time must be in the future.';

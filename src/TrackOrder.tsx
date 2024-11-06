@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from './components/Inputs';
 import  styles from './trackOrder.module.css'
 import { BikeSvg, HouseSvg, NoteSvg, SaladSvg, SearchIcon, TrackOrderSvg } from './components/Svgs';
+import { SuccessModal } from './components/successModal';
 
 interface orderInfoProps {
     name: string;    
@@ -18,6 +19,7 @@ function TrackOrder() {
     const [orderPlaced, setOrderPlaced] = useState<string | boolean>('');
     const [noId,setNoId] = useState(false)
     const [orderInfo, setOrderInfo] = useState<orderInfoProps | null>(null);
+    const [openModal,setOpenModal] = useState<boolean>(false)
     const [times, setTimes] = useState({
         placed:false,
         preparing: false,
@@ -59,15 +61,18 @@ function TrackOrder() {
         setOrderPlaced(time || false);
         checkTime()
         checkOrderExpiration();
+
+        const modalPay = localStorage.getItem('openModalPay')
+        setOpenModal(modalPay === "true")
     }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
             checkTime()
             checkOrderExpiration();
-        }, 60000); // Ejecutar cada minuto
+        }, 60000);
 
-        return () => clearInterval(interval); // Limpiar el intervalo al desmontar
+        return () => clearInterval(interval); 
     }, []);
 
     const checkOrderExpiration = () => {
@@ -90,8 +95,14 @@ function TrackOrder() {
     };
     const paymentInfo =  JSON.parse(localStorage.getItem('paymentInfo') || '{}')
 
+    const handleCloseModal = ()=>{
+        setOpenModal(false)
+        localStorage.setItem('openModalPay',JSON.stringify(false))
+      }
+
     if (!orderInfo || noId ) {
         return <div id='formContainer'>
+
             <h1 id='title'>TrackOrder</h1>
             <div className={styles.searchContainer}>
                 <Input
@@ -111,6 +122,7 @@ function TrackOrder() {
     }
     return (
         <div className={styles.container} id='formContainer'>
+            <SuccessModal msg='Your order has been Sent' open = {openModal} onClick={handleCloseModal}/>
             <h1 id='title'>TrackOrder</h1>
             <div className={styles.searchContainer}>
                 <Input

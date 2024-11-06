@@ -3,7 +3,7 @@ import style from './deals.module.css'
 function Deals () {
     const navigate = useNavigate()
     return (
-        <div className={style.deals}>
+        <div className={style.deals} id='formContainer'>
             <h1 id='title'>Deals</h1>
             <ul className={style.dealsContainer}>
             <p>Discounts</p>

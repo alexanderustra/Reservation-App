@@ -35,12 +35,17 @@
     margin-bottom: 0px;
 
 }
+
 .buttonsContainer {
     margin: auto;
     width: 80%;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
+}
+.orderForm li:hover {
+    margin-left: 19px;
+    scale: 1.1;
 }
 /*-------------------PAYMENT------------------------*/
 .paymentDiv {

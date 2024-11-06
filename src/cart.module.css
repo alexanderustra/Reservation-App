@@ -1,28 +1,34 @@
 .cartContainer {
     padding: 0px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: center;
 }
-.cartContainer li {
+.cartLi , .markedForDeletion {
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
-    min-height: 45px;
+    min-height: 50px;
     height: fit-content;
     border-radius: 3px;
     margin-bottom: 15px;
-    padding: 10px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+    padding-right: 10px;
     box-sizing: border-box;
     background: rgba(85, 85, 85, .5);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
-.cartContainer li svg {
+.cartLi svg , .markedForDeletion svg {
+    margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
 }
-.cartContainer h3 {
+.cartLi h3 , .markedForDeletion h3 {
     font-weight: 400;
 }
-.cartContainer p {
+.cartLi p , .markedForDeletion p {
     margin-top: 25px;
 }
 .name {
@@ -41,4 +47,7 @@
 }
 .buttonsContainer * {
     margin: 17px;
+}
+.markedForDeletion {
+    background-color: rgb(255,61,61);
 }

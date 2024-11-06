@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { foodsJson } from './components/foods';
 import { useNavigate } from 'react-router-dom'; 
 import './delivery.css'
+import { SuccessModal } from './components/successModal';
 
 interface Food {
   name: string;
@@ -17,8 +18,11 @@ interface Food {
 const FoodList: React.FC = () => {
   const navigate = useNavigate()
   const [foods, setFoods] = useState<Food[]>([]);
+  const [openModal,setOpenModal] = useState<boolean>(false)
 
   useEffect(() => {
+    const modalCart = localStorage.getItem('openModalCart')
+    setOpenModal(modalCart === "true")
     setFoods(foodsJson)
   }, []);
 
@@ -32,11 +36,17 @@ const FoodList: React.FC = () => {
       return categories;
     }, {});
   };
+
+  const handleCloseModal = ()=>{
+    setOpenModal(false)
+    localStorage.setItem('openModalCart',JSON.stringify(false))
+  }
   
   const categorizedFoods = categorizeFoods();
 
   return (
-    <div id='formContainer' style={{paddingRight:'0px',}}>
+    <div id='deliveryContainer' style={{paddingRight:'0px',}}>
+      <SuccessModal msg='Food added to cart' open = {openModal} onClick={handleCloseModal}/>
       <h1 id='title'>Delivery</h1>
       {Object.keys(categorizedFoods).map((category) => (
         <div key={category}>
@@ -47,7 +57,7 @@ const FoodList: React.FC = () => {
                     navigate('/deliveryOrder')
                     localStorage.setItem('foodName',food.name)
                 }}>
-                  <h3>{food.name}</h3>
+                  <h3 id='foodName'>{food.name}</h3>
                   <div className='foodContent'>
                     <img src={food.image} alt={food.name} />
                     <div className='foodPriceContainer'>

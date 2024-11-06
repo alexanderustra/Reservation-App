@@ -39,7 +39,9 @@ function Navigation() {
     <nav >
       <div id='titleCartContainer'>
         <h1 id='restaurantName'>Restaurant Name</h1>
-        <Link  className='homeLink' id='cartBtn' to="/cart"><CartSvg/><p id='cartNumber'>{cartItems.length}</p></Link>
+        <div id='cartBtn' >
+          <Link  className='homeLink' to="/cart"><CartSvg/><p id='cartNumber'>{cartItems.length}</p></Link>
+        </div>
       </div>
       <ul id='homeNav'>
         <div className='linkContainer'>

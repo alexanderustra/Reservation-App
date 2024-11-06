@@ -12,6 +12,7 @@ interface InputsProps {
     type?: string; 
     placeholder?: string;
     numberType?:boolean
+    min?:number
     onChange: (id: string, value: string) => void;
 }
 
@@ -27,6 +28,7 @@ function Input({
     onChange,
     errorMsg,
     numberType,
+    min
 }: InputsProps) {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +46,7 @@ function Input({
                     className={labelTop ? styles.labelTop : styles.label}
                     htmlFor={id}
                     style={{
-                        color: valid ? '#FFFFFF' : '#A30000',
+                        color: valid ? '#FFFFFF' : 'rgb(255,61,61)',
                         marginLeft: numberType ? '8px' : '0px',
                     }}
                 >
@@ -54,8 +56,9 @@ function Input({
             
             <input 
                 style={{ 
-                    backgroundColor: valid ? "#000000" : "#530909",
+                    backgroundColor: valid ? "#000000" : "rgb(255,61,61)",
                 }} 
+                min= {min}
                 value={value}
                 onChange={handleInputChange} 
                 type={type} 

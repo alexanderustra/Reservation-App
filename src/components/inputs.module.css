@@ -52,3 +52,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+.inputTop:hover >input{
+    border: 1px solid #aeeda3 ;
+}

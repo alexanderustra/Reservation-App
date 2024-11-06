@@ -109,6 +109,7 @@ function DeliveryPayment() {
       const payment = hours + " : " + minutes
       localStorage.setItem('payment', payment);
       localStorage.setItem('paymentInfo',JSON.stringify(paymentInfo))
+      localStorage.setItem('openModalPay',JSON.stringify(true))
       navigate('/trackOrder')
     } 
   };

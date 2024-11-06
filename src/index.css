@@ -5,6 +5,7 @@
 * {
     color: #FFFFFF;
     font-family: 'Lato', sans-serif;
+    transition: .2s;
 }
 ::-webkit-scrollbar {
     display: none; 
@@ -19,6 +20,7 @@ body {
     background-repeat: no-repeat !important; 
     background-attachment: fixed !important;
     background: url('./assets/backgroundimg.png');
+    user-select: none;
 }
 #root {
     width: 100%;
@@ -139,7 +141,7 @@ a {
     flex-direction: column;
     align-items: center; 
     justify-content: center; 
-    width: 70px;
+    width: 80px;
     height: fit-content;
     text-align: center;
 }
@@ -172,6 +174,7 @@ a {
 }
 #cartBtn {
     margin: 0px;
+    margin-top: 5px;
 }
 #cartNumber {
     position: relative;
@@ -184,3 +187,34 @@ a {
     border-radius: 50%;
     background-color: #FF3D3D;
 }
+li:hover {
+    scale: 1.02;
+}
+li:hover > * {
+    scale: 1;
+}
+
+button:hover {
+    background-color: #aeeda3;
+}
+button:active {
+    color: #FFFFFF;
+}
+.linkContainer :hover > svg {
+    scale: 1.25;
+}
+
+#cartBtn  :hover > svg{
+    scale: 1.3;
+}
+
+@media (min-width: 420px) {
+    #titleCartContainer {
+        width: 90%;
+    }
+    #restaurantName {
+        margin: auto;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+  }
