@@ -2,32 +2,31 @@ import styles from './inputs.module.css'
 import React from 'react';
 
 interface InputsProps {
-    labelTop?:boolean
+    labelOnTop?:boolean
     width?:string
     value:string | number
     id: string;
-    valid: boolean;
+    validInfo: boolean;
     errorMsg?: string | null;
     label?: string;
     type?: string; 
     placeholder?: string;
-    numberType?:boolean
+    needsMarginLeft?:boolean
     min?:number
     onChange: (id: string, value: string) => void;
 }
 
 function Input({
-    labelTop,
     width,
     label = '', 
     type = 'text', 
-    valid,
+    validInfo,
     placeholder,
     id,
     value,
     onChange,
     errorMsg,
-    numberType,
+    needsMarginLeft,
     min
 }: InputsProps) {
 
@@ -35,29 +34,24 @@ function Input({
         onChange(id, e.target.value); 
     };
 
+    const marginLeft = needsMarginLeft ? '8px' : '0px';
+
     return (
-        <div  className={labelTop ? styles.inputTop : styles.input}
+        <div  className={styles.inputContainer}
         style={{
             width: width,
-            marginLeft: numberType ? '8px' : '0px',
-            marginRight: numberType ? '8px' : '0px',}}>
+            marginLeft: marginLeft}}>
             {label && (
                 <label
-                    className={labelTop ? styles.labelTop : styles.label}
+                    className={validInfo ? styles.label : styles.errorLabel}
                     htmlFor={id}
-                    style={{
-                        color: valid ? '#FFFFFF' : 'rgb(255,61,61)',
-                        marginLeft: numberType ? '8px' : '0px',
-                    }}
                 >
-                    {valid ? label : errorMsg}
+                    {validInfo ? label : errorMsg}
                 </label>
             )}
             
             <input 
-                style={{ 
-                    backgroundColor: valid ? "#000000" : "rgb(255,61,61)",
-                }} 
+                className={validInfo ? styles.input :  styles.errorInput}
                 min= {min}
                 value={value}
                 onChange={handleInputChange} 

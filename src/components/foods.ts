@@ -3,9 +3,9 @@ export const foodsJson = [
       "name": "Vegan Burger",
       "description": "A delicious plant-based burger served with lettuce, tomato, and vegan mayo.",
       "ingredients": [
-        "lettuce",
-        "tomato",
-        "vegan mayo"
+        {name :"lettuce", price:0.50 , active: true},
+        {name: "tomato", price:0.70 , active: true},
+        {name :"vegan Mayo", price:1.10 , active: true}
       ],
       "tags": ["vegan", "gluten-free option", "healthy"],
       "image": "https://images.unsplash.com/photo-1627587780063-1655815c958b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -18,8 +18,8 @@ export const foodsJson = [
       "name": "Chicken Caesar Salad",
       "description": "Classic Caesar salad with grilled chicken, romaine lettuce, croutons, and parmesan cheese.",
       "ingredients": [
-        "croutons",
-        "parmesan cheese"
+      { name: "croutons", price: 0.20,active:true },
+      { name: "parmesan cheese", price: 0.90,active:true }
       ],
       "tags": ["non-vegan", "low-carb"],
       "image": "https://st.depositphotos.com/1158226/1845/i/600/depositphotos_18450361-stock-photo-healthy-caesar-salad-made-of.jpg",
@@ -32,8 +32,8 @@ export const foodsJson = [
       "name": "Margherita Pizza",
       "description": "Traditional Italian pizza with fresh mozzarella, basil, and tomato sauce.",
       "ingredients": [
-        "basil"
-      ],
+      { name: "basil", price: 0.77,active:true }
+    ],
       "tags": ["vegetarian", "contains gluten"],
       "image": "https://st.depositphotos.com/2252541/2379/i/600/depositphotos_23796179-stock-photo-pizza-margherita.jpg",
       "category": "Vegetarian",
@@ -45,8 +45,8 @@ export const foodsJson = [
       "name": "Gluten-Free Pancakes",
       "description": "Fluffy gluten-free pancakes made with almond flour, perfect for a light breakfast.",
       "ingredients": [
-        "maple syrup"
-      ],
+      { name: "maple syrup", price: 1.10,active:true }
+    ],
       "tags": ["gluten-free", "dairy-free", "healthy"],
       "image": "https://st2.depositphotos.com/3394061/7798/i/600/depositphotos_77980784-stock-photo-healthy-chia-pancakes-with-blueberries.jpg",
       "category": "Gluten-Free",
@@ -58,9 +58,9 @@ export const foodsJson = [
       "name": "Spaghetti Bolognese",
       "description": "Classic Italian pasta dish with a rich and savory beef Bolognese sauce.",
       "ingredients": [
-        "onion",
-        "garlic"
-      ],
+      { name: "onion", price: 0.10,active:true },
+      { name: "garlic", price: 0.10,active:true }
+    ],
       "tags": ["non-vegan", "contains gluten"],
       "image": "https://st4.depositphotos.com/2481033/40310/i/600/depositphotos_403109904-stock-photo-delicious-spaghetti-served-black-plate.jpg",
       "category": "Non-Vegan",
@@ -72,9 +72,9 @@ export const foodsJson = [
       "name": "Falafel Wrap",
       "description": "Crispy falafel balls wrapped in a flatbread with hummus, lettuce, and cucumber.",
       "ingredients": [
-        "hummus",
-        "lettuce",
-        "cucumber"
+        { name: "hummus", price: 0.25,active:true },
+        { name: "lettuce", price: 1.00,active:true },
+        { name: "cucumber", price: 0.35,active:true }
       ],
       "tags": ["vegan", "vegetarian", "dairy-free"],
       "image": "https://st2.depositphotos.com/1025354/10824/i/600/depositphotos_108240912-stock-photo-vegetarian-falafel-wraps.jpg",
@@ -87,9 +87,9 @@ export const foodsJson = [
       "name": "Quinoa Salad",
       "description": "A refreshing salad made with quinoa, cherry tomatoes, cucumber, and a lemon vinaigrette.",
       "ingredients": [
-        "cherry tomatoes",
-        "cucumber",
-        "red onion"
+      {name: "cherry tomatoes", price: 1.00,active:true },
+      {name: "cucumber", price: 1.00,active:true },
+      {name: "red onion", price: 1.00,active:true }
       ],
       "tags": ["vegan", "gluten-free", "healthy"],
       "image": "https://st.depositphotos.com/1290614/5111/i/600/depositphotos_51114989-stock-photo-quinoa-salad.jpg",
@@ -113,10 +113,10 @@ export const foodsJson = [
       "name": "Beef Tacos",
       "description": "Soft corn tortillas filled with seasoned ground beef, topped with onion and cilantro.",
       "ingredients": [
-        "onion",
-        "cilantro",
-        "salsa"
-      ],
+      { name: "onion", price: 1.00,active:true },
+      { name: "cilantro", price: 1.00,active:true },
+      { name: "salsa", price: 1.00,active:true }
+    ],
       "tags": ["non-vegan", "contains gluten"],
       "image": "https://st4.depositphotos.com/1328914/38381/i/600/depositphotos_383812790-stock-photo-platter-mexican-street-tacos-carne.jpg",
       "category": "Non-Vegan",
@@ -128,7 +128,7 @@ export const foodsJson = [
       "name": "Veggie Stir-Fry",
       "description": "A colorful mix of seasonal vegetables stir-fried in a savory sauce, served over rice.",
       "ingredients": [
-        "soy sauce"
+      { name: "hot sauce", price: 1.00,active:true }
       ],
       "tags": ["vegan", "vegetarian", "gluten-free option"],
       "image": "https://static9.depositphotos.com/1155356/1131/i/600/depositphotos_11315780-stock-photo-healthy-vegetable-stir-fry.jpg",
@@ -141,8 +141,8 @@ export const foodsJson = [
       "name": "Pesto Pasta",
       "description": "Pasta tossed in a vibrant basil pesto sauce, topped with pine nuts and parmesan.",
       "ingredients": [
-        "pine nuts",
-        "parmesan cheese"
+        { name: "pine nuts", price: 1.00,active:true },
+        { name: "parmesan cheese", price: 1.00,active:true }
       ],
       "tags": ["vegetarian", "contains gluten"],
       "image": "https://st2.depositphotos.com/3935465/7273/i/600/depositphotos_72730013-stock-photo-tagliatelle-pasta-with-spinach.jpg",
@@ -155,9 +155,9 @@ export const foodsJson = [
       "name": "Fruit Smoothie Bowl",
       "description": "A nutritious smoothie bowl topped with fresh fruits, granola, and seeds.",
       "ingredients": [
-        "granola",
-        "chia seeds"
-      ],
+      { name: "granola", price: 1.00,active:true },
+      { name: "chia seeds", price: 1.00,active:true }
+    ],
       "tags": ["vegan", "gluten-free", "healthy"],
       "image": "https://st2.depositphotos.com/7401550/11470/i/600/depositphotos_114709228-stock-photo-mousse-of-mixed-berries-in.jpg",
       "category": "Dessert",
@@ -169,9 +169,9 @@ export const foodsJson = [
       "name": "Lentil Soup",
       "description": "A hearty soup made with lentils, carrots, celery, and spices.",
       "ingredients": [
-        "carrots",
-        "celery",
-        "spinach"
+       {name:"carrots", price:1,active:true},
+       {name:"celery", price:1,active:true},
+       {name:"spinach", price:1,active:true},
       ],
       "tags": ["vegan", "gluten-free", "healthy"],
       "image": "https://st2.depositphotos.com/1354142/7805/i/600/depositphotos_78054976-stock-photo-red-lentil-soup-turkish-cuisine.jpg",
@@ -184,8 +184,8 @@ export const foodsJson = [
       "name": "BBQ Chicken Pizza",
       "description": "Delicious pizza topped with BBQ chicken, red onions, and cilantro.",
       "ingredients": [
-        "red onions",
-        "cilantro"
+       {name:"red onions", price:1,active:true},
+       {name:"cilantro", price:1,active:true},
       ],
       "tags": ["non-vegan", "contains gluten"],
       "image": "https://st.depositphotos.com/1692343/4376/i/600/depositphotos_43763257-stock-photo-homemade-barbecue-chicken-pizza.jpg",
@@ -198,8 +198,8 @@ export const foodsJson = [
       "name": "Stuffed Bell Peppers",
       "description": "Bell peppers stuffed with a flavorful mix of quinoa, black beans, and spices.",
       "ingredients": [
-        "black beans",
-        "corn"
+       {name:"black beans", price:1,active:true},
+       {name:"corn", price:1,active:true},
       ],
       "tags": ["vegan", "gluten-free", "healthy"],
       "image": "https://st.depositphotos.com/2075507/4554/i/600/depositphotos_45546603-stock-photo-quinoa-chicken-stuffed-peppers.jpg",
@@ -212,8 +212,8 @@ export const foodsJson = [
       "name": "Eggplant Parmesan",
       "description": "Layers of breaded eggplant, marinara sauce, and melted cheese.",
       "ingredients": [
-        "marinara sauce",
-        "mozzarella cheese"
+       {name:" marinara sauce", price:1,active:true},
+       {name:"mozzarella cheese", price:1,active:true},
       ],
       "tags": ["vegetarian", "contains gluten"],
       "image": "https://st.depositphotos.com/3424147/4895/i/600/depositphotos_48957963-stock-photo-baked-eggplant-with-basil-and.jpg",
@@ -226,8 +226,8 @@ export const foodsJson = [
       "name": "Fruit Tart",
       "description": "A delicious tart filled with pastry cream and topped with fresh seasonal fruits.",
       "ingredients": [
-        "seasonal fruits",
-        "whipped cream"
+       {name:"seasonal fruits", price:1,active:true},
+       {name:"whipped cream", price:1,active:true},
       ],
       "tags": ["vegetarian", "dessert"],
       "image": "https://st2.depositphotos.com/1692343/9904/i/600/depositphotos_99042346-stock-photo-homemade-key-lime-fruit-tart.jpg",
@@ -240,8 +240,8 @@ export const foodsJson = [
       "name": "Panna Cotta",
       "description": "A creamy Italian dessert made with sweetened cream thickened with gelatin.",
       "ingredients": [
-        "vanilla",
-        "berries"
+       {name:"vanilla", price:1,active:true},
+       {name:"barries", price:1,active:true},
       ],
       "tags": ["vegetarian", "dessert"],
       "image": "https://st4.depositphotos.com/19518982/29814/i/600/depositphotos_298147848-stock-photo-delicious-italian-dessert-panna-cotta.jpg",
@@ -254,8 +254,8 @@ export const foodsJson = [
       "name": "Chocolate Chip Cookies",
       "description": "Classic cookies filled with chocolate chips, perfect for a sweet treat.",
       "ingredients": [
-        "walnuts",
-        "chocolate chips"
+       {name:"walnuts", price:1,active:true},
+       {name:"chocolateChips", price:1,active:true},
       ],
       "tags": ["vegetarian", "dessert"],
       "image": "https://st5.depositphotos.com/65769180/68969/i/600/depositphotos_689699462-stock-photo-flat-lay-chocolate-chip-cookies.jpg",
@@ -268,8 +268,8 @@ export const foodsJson = [
       "name": "Spicy Tofu Stir-Fry",
       "description": "A spicy stir-fry with tofu, bell peppers, and broccoli in a savory sauce.",
       "ingredients": [
-        "bell peppers",
-        "broccoli"
+       {name:"bell peppers", price:1,active:true},
+       {name:"brocoli", price:1,active:true},
       ],
       "tags": ["vegan", "gluten-free"],
       "image": "https://st2.depositphotos.com/1692343/5754/i/600/depositphotos_57547313-stock-photo-homemade-tofu-stir-fry.jpg",
@@ -282,8 +282,8 @@ export const foodsJson = [
       "name": "Beef Stroganoff",
       "description": "Tender strips of beef in a creamy mushroom sauce served over egg noodles.",
       "ingredients": [
-        "mushrooms",
-        "egg noodles"
+        {name:"mushrooms", price:1,active:true},
+        {name:"egg noodles", price:1,active:true},
       ],
       "tags": ["non-vegan", "contains gluten"],
       "image": "https://st2.depositphotos.com/1692343/5754/i/600/depositphotos_57546863-stock-photo-homemade-hearty-beef-stroganoff.jpg",
@@ -296,8 +296,8 @@ export const foodsJson = [
       "name": "Caprese Salad",
       "description": "Fresh mozzarella, tomatoes, and basil drizzled with balsamic reduction.",
       "ingredients": [
-        "balsamic reduction",
-        "fresh basil"
+       {name:"fresh basil", price:1,active:true},
+       {name:"balsamic reduction", price:1,active:true},
       ],
       "tags": ["vegetarian", "gluten-free"],
       "image": "https://st.depositphotos.com/3220235/4198/i/600/depositphotos_41981983-stock-photo-classic-caprese-salad.jpg",

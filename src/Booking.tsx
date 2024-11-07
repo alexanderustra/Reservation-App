@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from './components/Inputs';
 import style from './booking.module.css';
+import { ReservationConfirmed } from './components/successModals';
 
 type ErrorList = {
   name?: string;
@@ -27,17 +28,6 @@ function Booking() {
     id: generateRandomId(),
   });
 
-  const ReservationConfirmed = ({ bookingInfo }: { bookingInfo: any }) => (
-    <div className={style.reservationModal}>
-      <h2>Your reservation is confirmed!</h2>
-      <p>
-        We have reserved a table for {bookingInfo.seats.adults} adults and {bookingInfo.seats.kids} kids on{' '}
-        {bookingInfo.date} from {bookingInfo.time.start} to {bookingInfo.time.end}. We look forward to seeing you soon!
-      </p>
-      <button onClick={handleCancel} className={style.cancelBtn}>Cancel</button>
-    </div>
-  );
-
   useEffect(() => {
     const bookingData = localStorage.getItem('bookingInfo');
     if (bookingData) {
@@ -62,7 +52,6 @@ function Booking() {
       }
     });
   };
-  
 
   const validateInputs = () => {
     const errorList: ErrorList = {};
@@ -168,62 +157,62 @@ function Booking() {
       >
         <Input
           errorMsg={errors['name'] || null} 
-          labelTop
+          labelOnTop
           width="100%"
           id="name"
           label="Name"
           type="text"
-          valid={!errors['name']}
+          validInfo={!errors['name']}
           value={bookingInfo.name}
           onChange={handleInputChange}
         />
         <Input
           errorMsg={errors['phone'] || null}
-          labelTop
+          labelOnTop
           width="100%"
           id="phone"
           label="Phone"
           type="number"
-          valid={!errors['phone']}
+          validInfo={!errors['phone']}
           value={bookingInfo.phone}
           onChange={handleInputChange}
         />
         <div className={style.timeContainer}>
           <Input
             errorMsg={errors['date'] || null}
-            labelTop
+            labelOnTop
             width="165px"
             id="date"
             label="Date"
             type="date" 
             placeholder="dd/mm"
-            valid={!errors['date']}
+            validInfo={!errors['date']}
             value={bookingInfo.date}
             onChange={handleInputChange}
           />
           <Input
             errorMsg={errors['start'] || null}
-            numberType
-            labelTop
+            needsMarginLeft
+            labelOnTop
             width="80px"
             id="start"
             label="Time"
             placeholder="Start"
             type="time"
-            valid={!errors['start']}
+            validInfo={!errors['start']}
             value={bookingInfo.time.start}
             onChange={handleInputChange}
           />
           <Input
             errorMsg={errors['end'] || null}
-            labelTop
-            numberType
+            labelOnTop
+            needsMarginLeft
             label="End"
             width="80px"
             id="end"
             placeholder="End"
             type="time"
-            valid={!errors['end']}
+            validInfo={!errors['end']}
             value={bookingInfo.time.end}
             onChange={handleInputChange}
           />
@@ -232,26 +221,26 @@ function Booking() {
         <div className={style.seatsContainer}>
           <Input
             errorMsg={errors['adults'] || null}
-            labelTop
+            labelOnTop
             width="80px"
             id="adults"
             label="Seats"
             placeholder="Adults"
             type="number"
-            valid={!errors['adults']}
+            validInfo={!errors['adults']}
             value={bookingInfo.seats.adults}
             onChange={handleInputChange}
           />
           <Input
           errorMsg={errors['kids'] || null}
-          numberType
-            labelTop
+            needsMarginLeft
+            labelOnTop
             width="80px"
             id="kids"
             label="Kids"
             placeholder="Kids"
             type="number"
-            valid={!errors['kids']}
+            validInfo={!errors['kids']}
             value={bookingInfo.seats.kids}
             onChange={handleInputChange}
           />
@@ -270,7 +259,7 @@ function Booking() {
           Request
         </button>
       </form>
-      {confirmed && <ReservationConfirmed bookingInfo={bookingInfo} />}
+      {confirmed && <ReservationConfirmed bookingInfo={bookingInfo} handleCancel={handleCancel}/>}
       <Link to="/Reservation-App/">
         <button id='homeBtn'>Home</button>
       </Link>

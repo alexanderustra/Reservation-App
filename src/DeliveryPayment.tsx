@@ -121,22 +121,20 @@ function DeliveryPayment() {
         <Input
         errorMsg = 'Deliver adress is Needed'
         width='100%'
-          labelTop
           id="deliverTo"
           label="Deliver To"
           type="text"
-          valid={!errors.includes('deliverTo')}
+          validInfo={!errors.includes('deliverTo')}
           value={paymentInfo.deliverTo}
           onChange={handleInputChange}
         />
          <Input
          errorMsg = 'Phone number Needed'
         width='100%'
-          labelTop
           id="phone"
           label="Phone Number"
-          type="text"
-          valid={!errors.includes('phone')}
+          type="number"
+          validInfo={!errors.includes('phone')}
           value={paymentInfo.phone}
           onChange={handleInputChange}
         />
@@ -161,11 +159,11 @@ function DeliveryPayment() {
           <Input
           errorMsg = 'Name is Needed'
             width='70%'
-            labelTop
+
             id="name"
             label="Name"
             type="text"
-            valid={!errors.includes('name')}
+            validInfo={!errors.includes('name')}
             value={paymentInfo.payment.name}
             onChange={handleInputChange}
           />
@@ -173,13 +171,13 @@ function DeliveryPayment() {
           <Input
           errorMsg = 'Invalid expiry date'
             width='70px'
-            numberType
-            labelTop
+            needsMarginLeft
+
             id="expiry"
             label="Expiry"
             placeholder='MM/YY'
             type="text"
-            valid={!errors.includes('expiry')}
+            validInfo={!errors.includes('expiry')}
             value={paymentInfo.payment.expiry}
             onChange={handleInputChange}
           />
@@ -188,11 +186,11 @@ function DeliveryPayment() {
           <Input
           errorMsg = 'Invalid number card'
             width='70%'
-            labelTop
+
             id="cardNumber"
             label="Card Number"
-            type="text"
-            valid={!errors.includes('cardNumber')}
+            type="number"
+            validInfo={!errors.includes('cardNumber')}
             value={paymentInfo.payment.cardNumber}
             onChange={handleInputChange}
           />
@@ -200,12 +198,12 @@ function DeliveryPayment() {
           <Input
           errorMsg = 'Invalid CVV'
             width='70px'
-            numberType
-            labelTop
+            needsMarginLeft
+
             id="cvv"
             label="CVV"
-            type="text"
-            valid={!errors.includes('cvv')}
+            type="number"
+            validInfo={!errors.includes('cvv')}
             value={paymentInfo.payment.cvv}
             onChange={handleInputChange}
           />

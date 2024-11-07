@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { foodsJson } from './components/foods';
 import { useNavigate } from 'react-router-dom'; 
 import './delivery.css'
-import { SuccessModal } from './components/successModal';
+import { SuccessModal } from './components/successModals';
 
 interface Food {
   name: string;
