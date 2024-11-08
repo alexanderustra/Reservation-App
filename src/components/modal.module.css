@@ -39,6 +39,23 @@
     color: #FFFFFF;
     background-color: transparent;
 }
+/*-------------------RESERVATION-MODAL----------------------*/
+.reservationModal {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color:  rgb(131, 255 , 124,.5);
+    padding: 15px;
+    padding-bottom: 0px;
+}
+.reservationModal h2 {
+    margin: 0px;
+    font-size: 18px;
+}
+.reservationModal p {
+    margin: 0px;
+    margin-top: 15px;
+}
 @keyframes drop-in {
     0% {
         left: 50%;
@@ -85,22 +102,4 @@
     .modalIn {
         width: fit-content;
     }
-}
-
-/*-------------------RESERVATION-MODAL----------------------*/
-.reservationModal {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 5px;
-    background-color:  rgb(131, 255 , 124,.5);
-    padding: 15px;
-    padding-bottom: 0px;
-}
-.reservationModal h2 {
-    margin: 0px;
-    font-size: 18px;
-}
-.reservationModal p {
-    margin: 0px;
-    margin-top: 15px;
 }

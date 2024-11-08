@@ -16,7 +16,7 @@ function Cart() {
     const navigate = useNavigate();
     const [cart, setCart] = useState<CartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [markedItemIndex, setMarkedItemIndex] = useState<number | null>(null); // Estado para marcar el ítem a eliminar
+    const [markedItemIndex, setMarkedItemIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const storedCart = localStorage.getItem('cart');
@@ -28,7 +28,7 @@ function Cart() {
 
     useEffect(() => {
         const total = cart.reduce((acc, item) => {
-            const discountedPrice = (item.price * (1 - item.discount / 100)) * item.cuantity;
+            const discountedPrice = (item.price  * item.cuantity);
             return acc + discountedPrice;
         }, 0);
         
@@ -42,18 +42,15 @@ function Cart() {
 
     const handleItemHold = (index: number) => {
         if (markedItemIndex === index) {
-            // Si ya está marcado y se hace clic, se elimina
             const updatedCart = cart.filter((_, i) => i !== index);
             setCart(updatedCart);
-            localStorage.setItem('cart', JSON.stringify(updatedCart)); // Actualiza el carrito en localStorage
-            setMarkedItemIndex(null); // Desmarca el item
+            localStorage.setItem('cart', JSON.stringify(updatedCart)); 
+            setMarkedItemIndex(null); 
         } else {
-            // Marca el ítem para posible eliminación
             setMarkedItemIndex(index);
         }
     };
 
-    // Detecta clic fuera del elemento marcado para desmarcarlo
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (markedItemIndex !== null) {

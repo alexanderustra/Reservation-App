@@ -26,7 +26,6 @@ interface Food {
 }
 
 function DeliveryOrder() {
-  const [priceWithoutIngredients, setPriceWithoutIngredients] = useState(0);
   const [cuantity, setCuantity] = useState(1);
   const [foodName, setFoodName] = useState<string | null>(null);
   const [foodDetails, setFoodDetails] = useState<Food | null>(null);
@@ -53,8 +52,7 @@ function DeliveryOrder() {
         
         const updatedFood = { ...foundFood, ingredients: initialIngredients } as any;
         setFoodDetails(updatedFood);
-  
-        setPriceWithoutIngredients(foundFood.price);
+
       } else {
         console.log("Food not found in the JSON");
       }
@@ -76,11 +74,10 @@ function DeliveryOrder() {
   
 
   useEffect(() => {
-    const discountFactor = foodDetails ? (100 - foodDetails.discount) / 100 : 1;
     setFinalOrder({
       name: foodDetails?.name,
       cuantity,
-      price: finalPrice * discountFactor,
+      price: finalPrice.toFixed(2),
       ingredients: foodDetails?.ingredients.filter(ing => ing.active).map(ing => ing.name),
       id: generateRandomId(),
       discount: foodDetails?.discount,
@@ -108,7 +105,6 @@ function DeliveryOrder() {
       alert('Quantity must be greater than 0.');
       return;
     }
-
     localStorage.setItem('finalOrder', JSON.stringify(finalOrder));
     localStorage.setItem('orderMethod', 'fromDeliveryOrder');
     navigate('/deliveryPayment', { state: { from: location.pathname } });
@@ -123,7 +119,7 @@ function DeliveryOrder() {
     const newOrder = {
       name: foodDetails?.name,
       cuantity,
-      price: finalPrice,
+      price: finalPrice.toFixed(2),
       isDessert: foodDetails?.isDessert,
       ingredients: foodDetails?.ingredients.filter(ing => ing.active).map(ing => ing.name),
       discount: foodDetails?.discount,

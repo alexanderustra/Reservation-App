@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import './delivery.css'
 import { SuccessModal } from './components/successModals';
 
+interface Ingredient {
+  name: string;
+  price: number;
+  active: boolean;
+}
 interface Food {
   name: string;
   description: string;
-  ingredients: string[];
+  ingredients: Ingredient[];
   tags: string[];
   image: string;
   category: string;

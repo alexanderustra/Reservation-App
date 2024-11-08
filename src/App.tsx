@@ -15,7 +15,6 @@ function App() {
       <Navigation />
       
       <Routes>
-        {/* Mostrar HomePage solo en la ruta "/" */}
         <Route path="/booking" element={<Booking />} />
         <Route path="/deals" element={<Deals />} />
         <Route path="/delivery" element={<Delivery />} />
@@ -36,7 +35,7 @@ function Navigation() {
   }
   const cartItems = JSON.parse(localStorage.getItem('cart') || '[]') as any[];
   return (
-    <nav >
+    <nav id='homeContainer' >
       <div id='titleCartContainer'>
         <h1 id='restaurantName'>Restaurant Name</h1>
         <div id='cartBtn' >
@@ -53,20 +52,6 @@ function Navigation() {
           <Link  className='homeLink' to="/trackorder"><TrackOrderSvg/> <h2>Track Order</h2></Link>
         </div>
       </ul>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </nav>
   );
 }

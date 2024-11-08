@@ -9,14 +9,13 @@ interface orderInfoProps {
     name: string;    
     quantity: number;  
     price: number;  
-    ingredients: string[]; 
+    ingredients: string[];
     id: string;
 }
 
 function TrackOrder() {
     const navigate = useNavigate();
     const [searchedId,setSearchedId] = useState('')
-    const [orderPlaced, setOrderPlaced] = useState<string | boolean>('');
     const [noId,setNoId] = useState(false)
     const [orderInfo, setOrderInfo] = useState<orderInfoProps | null>(null);
     const [openModal,setOpenModal] = useState<boolean>(false)
@@ -52,21 +51,20 @@ function TrackOrder() {
                 });
             }
     }
+
     useEffect(() => {
         const local = localStorage.getItem('finalOrder');
-        const time = localStorage.getItem('payment');
         if (local) {
             setOrderInfo(JSON.parse(local));
             setNoId(false)
         }
-        setOrderPlaced(time || false);
         checkTime()
         checkOrderExpiration();
 
         const modalPay = localStorage.getItem('openModalPay')
         setOpenModal(modalPay === "true")
     }, []);
-
+    
     useEffect(() => {
         const interval = setInterval(() => {
             checkTime()
@@ -85,6 +83,7 @@ function TrackOrder() {
         }
     };
     const handleInputChange = (id:string ,value:string)=>{
+        console.log(id)
         setSearchedId(value)
     }
     const handleSearch = () => {
@@ -100,7 +99,6 @@ function TrackOrder() {
         setOpenModal(false)
         localStorage.setItem('openModalPay',JSON.stringify(false))
       }
-
     
         return (
             <div className={styles.container} >

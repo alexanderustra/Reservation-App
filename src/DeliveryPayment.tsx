@@ -1,16 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from './components/Inputs';
-import { useNavigate ,useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import styles from './deliveryForm.module.css'
+
+type PaymentInfo = {
+  payment: {
+    expiry: string;
+    cvv: string;
+    name: string;
+    [key: string]: string | number;
+  };
+  [key: string]: any;
+};
+interface OrderItem {
+  name: string;
+  cuantity: number;
+  price: number | string;
+  isDessert: boolean;
+  ingredients: string[];
+  discount: number;
+}
+
 
 function DeliveryPayment() {
   const location = useLocation();
   const previousPage = location.state?.from;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [paymentInfo, setPaymentInfo] = useState({
     deliverTo: '',
-    phone:'',
+    phone: '',
     annotation: '',
     payment: {
       method: 'Credit Card',
@@ -22,15 +41,86 @@ function DeliveryPayment() {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    let order: OrderItem[] = [];
+    const orderMethod = localStorage.getItem('orderMethod');
+
+    if (orderMethod === 'fromDeliveryOrder') {
+      const finalOrder = localStorage.getItem('finalOrder');
+      order = finalOrder ? JSON.parse(finalOrder) : [];
+    }
+
+    if (orderMethod === 'fromCart') {
+      const cart = localStorage.getItem('cart');
+      order = cart ? JSON.parse(cart) : [];
+
+      const calculateTotalPrice = (orderItems: OrderItem[]): number => {
+        return orderItems.reduce((total, item) => {
+          const itemPrice = parseFloat(item.price as string) * item.cuantity;
+          return total + itemPrice;
+        }, 0);
+      };
+
+      const total = calculateTotalPrice(order);
+      setTotalPrice(total);
+    }
+
+    console.log(totalPrice);
+  }, []);
   
-  //useEffect(()=>{
-    //const orderInfo = localStorage.getItem('finalOrder')
-    //const cartInfo = localStorage.getItem('cart')
-    //const paymentMethod = localStorage.getItem('orderMethod')
-  //},[])
 
   const handleInputChange = (id: string, value: string | number) => {
-    setPaymentInfo((prevState) => {
+    let newValue = value.toString();
+    setPaymentInfo(({prevState}:PaymentInfo) => {
+
+      if (id === "expiry") {
+        let formattedExpiry = value.toString().replace(/\D/g, '');
+
+        if (formattedExpiry.length > 2) {
+          formattedExpiry = formattedExpiry.slice(0, 2) + '/' + formattedExpiry.slice(2, 4);
+        }
+        
+        if (formattedExpiry.length > 5) {
+          formattedExpiry = formattedExpiry.slice(0, 5); 
+        }
+
+        return {
+          ...prevState,
+          payment: {
+            ...prevState.payment,
+            expiry: formattedExpiry
+          }
+        };
+      }
+      if (id === "cvv") {
+     
+        if (/^\d{0,3}$/.test(newValue)) {
+          return {
+            ...prevState,
+            payment: {
+              ...prevState.payment,
+              [id]: value
+            }
+          };
+        } else {
+          return prevState; 
+        }
+      } else if (id === "name") {
+   
+        if (/^[a-zA-Z\s]*$/.test(newValue)) {
+          return {
+            ...prevState,
+            payment: {
+              ...prevState.payment,
+              [id]: value
+            }
+          };
+        } else {
+          return prevState; 
+        }
+      }
       if (id in prevState.payment) {
         return {
           ...prevState,
@@ -62,65 +152,60 @@ function DeliveryPayment() {
     const errorList: string[] = [];
 
     if (!paymentInfo.deliverTo.trim()) {
-        errorList.push('deliverTo');
+      errorList.push('deliverTo');
     }
 
     if (!paymentInfo.phone.trim()) {
-        errorList.push('phone');
+      errorList.push('phone');
     }
 
     if (!paymentInfo.payment.name.trim()) {
-        errorList.push('name');
+      errorList.push('name');
     }
 
-    // Validación para el número de tarjeta de crédito (debe tener exactamente 16 dígitos)
     if (!/^\d{16}$/.test(paymentInfo.payment.cardNumber)) {
-        errorList.push('cardNumber');
+      errorList.push('cardNumber');
     }
 
-    // Validación para la fecha de vencimiento (formato MM/YY y no expirada)
     if (!/^(0[1-9]|1[0-2])\/([0-9]{2})$/.test(paymentInfo.payment.expiry)) {
-        errorList.push('expiry');
+      errorList.push('expiry');
     } else {
-        const [month, year] = paymentInfo.payment.expiry.split('/');
-        const currentYear = new Date().getFullYear() % 100;
-        const currentMonth = new Date().getMonth() + 1;
-        if (Number(year) < currentYear || (Number(year) === currentYear && Number(month) < currentMonth)) {
-            errorList.push('expiry');
-        }
+      const [month, year] = paymentInfo.payment.expiry.split('/');
+      const currentYear = new Date().getFullYear() % 100;
+      const currentMonth = new Date().getMonth() + 1;
+      if (Number(year) < currentYear || (Number(year) === currentYear && Number(month) < currentMonth)) {
+        errorList.push('expiry');
+      }
     }
 
-    // Validación para el CVV (debe tener 3 o 4 dígitos)
     if (!/^\d{3,4}$/.test(paymentInfo.payment.cvv)) {
-        errorList.push('cvv');
+      errorList.push('cvv');
     }
 
     setErrors(errorList);
     return errorList.length === 0;
-};
-
-
+  };
 
   const handleRequest = () => {
     if (validateInputs()) {
       const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0'); 
+      const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
-      const payment = hours + " : " + minutes
+      const payment = hours + " : " + minutes;
       localStorage.setItem('payment', payment);
-      localStorage.setItem('paymentInfo',JSON.stringify(paymentInfo))
-      localStorage.setItem('openModalPay',JSON.stringify(true))
-      navigate('/trackOrder')
-    } 
+      localStorage.setItem('paymentInfo', JSON.stringify(paymentInfo));
+      localStorage.setItem('openModalPay', JSON.stringify(true));
+      navigate('/trackOrder');
+    }
   };
 
   return (
     <div id='formContainer'>
-      <h1 id='title' >Payment</h1>
+      <h1 id='title'>Payment</h1>
       <form action="" className={styles.paymentForm}>
         <Input
-        errorMsg = 'Deliver adress is Needed'
-        width='100%'
+          errorMsg='Deliver address is needed'
+          width='100%'
           id="deliverTo"
           label="Deliver To"
           type="text"
@@ -128,9 +213,9 @@ function DeliveryPayment() {
           value={paymentInfo.deliverTo}
           onChange={handleInputChange}
         />
-         <Input
-         errorMsg = 'Phone number Needed'
-        width='100%'
+        <Input
+          errorMsg='Phone number needed'
+          width='100%'
           id="phone"
           label="Phone Number"
           type="number"
@@ -139,13 +224,13 @@ function DeliveryPayment() {
           onChange={handleInputChange}
         />
         <div id="specialRequestContainer">
-        <label htmlFor="specialRequest">Special Request</label>
-        <textarea 
-          name="anotation"
-          id="annotation"
-          value={paymentInfo.annotation}
-          onChange={(e) => handleInputChange('annotation', e.target.value)}
-        ></textarea>
+          <label htmlFor="specialRequest">Special Request</label>
+          <textarea 
+            name="anotation"
+            id="annotation"
+            value={paymentInfo.annotation}
+            onChange={(e) => handleInputChange('annotation', e.target.value)}
+          ></textarea>
         </div>
 
         <div className={styles.paymentDiv}>
@@ -157,9 +242,8 @@ function DeliveryPayment() {
         
         <div className={styles.creditCardContainer}>
           <Input
-          errorMsg = 'Name is Needed'
+            errorMsg='Name is needed'
             width='70%'
-
             id="name"
             label="Name"
             type="text"
@@ -169,10 +253,9 @@ function DeliveryPayment() {
           />
 
           <Input
-          errorMsg = 'Invalid expiry date'
+            errorMsg='Invalid expiry date'
             width='70px'
             needsMarginLeft
-
             id="expiry"
             label="Expiry"
             placeholder='MM/YY'
@@ -181,12 +264,11 @@ function DeliveryPayment() {
             value={paymentInfo.payment.expiry}
             onChange={handleInputChange}
           />
-          </div>
-          <div className={styles.creditCardContainer}>
+        </div>
+        <div className={styles.creditCardContainer}>
           <Input
-          errorMsg = 'Invalid number card'
+            errorMsg='Invalid number card'
             width='70%'
-
             id="cardNumber"
             label="Card Number"
             type="number"
@@ -196,10 +278,9 @@ function DeliveryPayment() {
           />
 
           <Input
-          errorMsg = 'Invalid CVV'
+            errorMsg='Invalid CVV'
             width='70px'
             needsMarginLeft
-
             id="cvv"
             label="CVV"
             type="number"
@@ -211,7 +292,7 @@ function DeliveryPayment() {
 
         <button onClick={handleRequest} type="button">Request</button>
       </form>
-      <button onClick={()=> navigate(previousPage)}>
+      <button onClick={() => navigate(previousPage)}>
         Go Back
       </button>
     </div>
