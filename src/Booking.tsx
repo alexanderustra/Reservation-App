@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Input from './components/Inputs';
 import style from './booking.module.css';
 import { ReservationConfirmed } from './components/successModals';
+import { validateBookingInputs } from './components/validationUtils';
 
 type ErrorList = {
   name?: string;
@@ -13,12 +14,22 @@ type ErrorList = {
   adults?: string;
   [key: string]: string | undefined;
 };
+
+type BookingInfo = {
+  date: string,
+  time: { start:string, end: string },
+  seats: { adults: string, kids: string },
+  specialRequest: string,
+  name: string,
+  phone: string,
+  id:number
+}
 const generateRandomId = () => Math.floor(10000 + Math.random() * 90000);
 
 function Booking() {
   const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState<ErrorList>({}); 
-  const [bookingInfo, setBookingInfo] = useState({
+  const [bookingInfo, setBookingInfo] = useState<BookingInfo>({
     date: '',
     time: { start: '', end: '' },
     seats: { adults: '', kids: '' },
@@ -42,92 +53,20 @@ function Booking() {
   }, []);
 
   const handleInputChange = (id: string, value: string | number) => {
-    setBookingInfo((prevState) => {
-      if (id === 'start' || id === 'end') {
-        return { ...prevState, time: { ...prevState.time, [id]: value } };
-      } else if (id === 'adults' || id === 'kids') {
-        return { ...prevState, seats: { ...prevState.seats, [id]: value } };
-      } else {
-        return { ...prevState, [id]: value };
-      }
-    });
+    setBookingInfo((prevState) => ({
+      ...prevState,
+      [id === 'start' || id === 'end' ? 'time' : id === 'adults' || id === 'kids' ? 'seats' : id]: {
+        ...(id === 'start' || id === 'end' ? prevState.time : id === 'adults' || id === 'kids' ? prevState.seats : prevState),
+        [id]: value,
+      },
+    }));
   };
-
-  const validateInputs = () => {
-    const errorList: ErrorList = {};
-
-    function timeToMinutes(time:any) {
-      const [hours, minutes] = time.split(":").map(Number);
-      return hours * 60 + minutes;
-    }
-    const MIN_TIME = timeToMinutes("08:00"); 
-    const MAX_TIME = timeToMinutes("23:00"); 
-
-    function isValidTime(time:any) {
-        const timeInMinutes = timeToMinutes(time);
-        return timeInMinutes >= MIN_TIME && timeInMinutes <= MAX_TIME;
-    }
-    const today = new Date();
-    const todayString = today.toISOString().split("T")[0]; 
-    const currentHours = today.getHours();
-    const currentMinutes = today.getMinutes();
-    const currentTimeInMinutes = currentHours * 60 + currentMinutes;
-
-    if (!bookingInfo.name) errorList['name'] = 'A name is required.';
-    if (!bookingInfo.date) errorList['date'] = 'Please select a date.';
-    if (!bookingInfo.phone) errorList['phone'] = 'Phone number is required.';
-    if (!bookingInfo.seats.adults) errorList['adults'] = 'Please specify the number of adults.';
-
-    if ((Number(bookingInfo.seats.adults) + Number(bookingInfo.seats.kids)) > 12) {
-        errorList['adults'] = 'Total seats cannot exceed 10.';
-    }
-
-    if (!bookingInfo.time.start) {
-        errorList['start'] = 'Start time is required.';
-    } else if (!isValidTime(bookingInfo.time.start)) {
-        errorList['start'] = 'Start time must be between 8:00 AM and 11:00 PM.';
-    }
-
-    if (!bookingInfo.time.end) {
-        errorList['end'] = 'End time is required.';
-    } else if (!isValidTime(bookingInfo.time.end)) {
-        errorList['end'] = 'End time must be between 8:00 AM and 11:00 PM.';
-    }
-
-    if (
-        bookingInfo.time.start &&
-        bookingInfo.time.end &&
-        timeToMinutes(bookingInfo.time.start) >= timeToMinutes(bookingInfo.time.end)
-    ) {
-        errorList['start'] = 'Start time must be earlier than end time.';
-        errorList['end'] = 'End time must be later than start time.';
-    }
-
-    if (
-      bookingInfo.time.start &&
-      bookingInfo.time.end &&
-      timeToMinutes(bookingInfo.time.end) - timeToMinutes(bookingInfo.time.start) < 30
-    ) {
-      errorList['end'] = 'End time must be at least 30 minutes after the start time.';
-    }
-
-    if (bookingInfo.date < todayString) {
-      errorList['date'] = 'The date must be in the future.';
-  } else if (bookingInfo.date === todayString) {
-      const startTimeInMinutes = timeToMinutes(bookingInfo.time.start);
-      if (startTimeInMinutes <= currentTimeInMinutes) {
-          errorList['start'] = 'Start time must be in the future.';
-      }
-  }
-
-    setErrors(errorList);
-    return Object.keys(errorList).length === 0;
-  };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (validateInputs()) {
+    if (validateBookingInputs(bookingInfo,setErrors)) {
       localStorage.setItem('bookingInfo', JSON.stringify(bookingInfo));
       setConfirmed(true);
     }

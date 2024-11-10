@@ -44,7 +44,6 @@ function DeliveryOrder() {
     if (foodName) {
       const foundFood = foodsJson.find((food) => food.name === foodName);
       if (foundFood) {
-        // Solo se establece al inicio o al cambiar foodName
         const initialIngredients = foundFood.ingredients.map((ingredient) => ({
           ...ingredient,
           active: true,

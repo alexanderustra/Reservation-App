@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
 import Input from './components/Inputs';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { validatePaymentInputs } from './components/validationUtils';
 import styles from './deliveryForm.module.css'
 
+
+/*
+interface OrderItem {
+  name: string;
+  cuantity: number;
+  price: number | string;
+  isDessert: boolean;
+  ingredients: string[];
+  discount: number;
+}
+*/
 type PaymentInfo = {
   payment: {
     expiry: string;
@@ -13,15 +24,6 @@ type PaymentInfo = {
   };
   [key: string]: any;
 };
-interface OrderItem {
-  name: string;
-  cuantity: number;
-  price: number | string;
-  isDessert: boolean;
-  ingredients: string[];
-  discount: number;
-}
-
 
 function DeliveryPayment() {
   const location = useLocation();
@@ -41,8 +43,10 @@ function DeliveryPayment() {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
 
+  // Para conseguir el precio de la órden.
+  // No es necesario pero lo quería agregar.
+  /*
   useEffect(() => {
     let order: OrderItem[] = [];
     const orderMethod = localStorage.getItem('orderMethod');
@@ -64,12 +68,9 @@ function DeliveryPayment() {
       };
 
       const total = calculateTotalPrice(order);
-      setTotalPrice(total);
     }
-
-    console.log(totalPrice);
   }, []);
-  
+  */
 
   const handleInputChange = (id: string, value: string | number) => {
     let newValue = value.toString();
@@ -148,46 +149,11 @@ function DeliveryPayment() {
     }));
   };
 
-  const validateInputs = () => {
-    const errorList: string[] = [];
-
-    if (!paymentInfo.deliverTo.trim()) {
-      errorList.push('deliverTo');
-    }
-
-    if (!paymentInfo.phone.trim()) {
-      errorList.push('phone');
-    }
-
-    if (!paymentInfo.payment.name.trim()) {
-      errorList.push('name');
-    }
-
-    if (!/^\d{16}$/.test(paymentInfo.payment.cardNumber)) {
-      errorList.push('cardNumber');
-    }
-
-    if (!/^(0[1-9]|1[0-2])\/([0-9]{2})$/.test(paymentInfo.payment.expiry)) {
-      errorList.push('expiry');
-    } else {
-      const [month, year] = paymentInfo.payment.expiry.split('/');
-      const currentYear = new Date().getFullYear() % 100;
-      const currentMonth = new Date().getMonth() + 1;
-      if (Number(year) < currentYear || (Number(year) === currentYear && Number(month) < currentMonth)) {
-        errorList.push('expiry');
-      }
-    }
-
-    if (!/^\d{3,4}$/.test(paymentInfo.payment.cvv)) {
-      errorList.push('cvv');
-    }
-
-    setErrors(errorList);
-    return errorList.length === 0;
-  };
-
   const handleRequest = () => {
-    if (validateInputs()) {
+    const errorList = validatePaymentInputs(paymentInfo);
+    setErrors(errorList);
+
+    if (errorList.length === 0) {
       const now = new Date();
       const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
