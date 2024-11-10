@@ -1,10 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from './components/Inputs';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { validatePaymentInputs } from './components/validationUtils';
 import styles from './deliveryForm.module.css'
 
-
+/*
+type PaymentInfo = {
+  payment: {
+    expiry: string;
+    cvv: string;
+    name: string;
+    [key: string]: string | number;
+  };
+  [key: string]: any;
+};
 /*
 interface OrderItem {
   name: string;
@@ -15,15 +24,6 @@ interface OrderItem {
   discount: number;
 }
 */
-type PaymentInfo = {
-  payment: {
-    expiry: string;
-    cvv: string;
-    name: string;
-    [key: string]: string | number;
-  };
-  [key: string]: any;
-};
 
 function DeliveryPayment() {
   const location = useLocation();
@@ -74,7 +74,7 @@ function DeliveryPayment() {
 
   const handleInputChange = (id: string, value: string | number) => {
     let newValue = value.toString();
-    setPaymentInfo(({prevState}:PaymentInfo) => {
+    setPaymentInfo((prevState: any) => {
 
       if (id === "expiry") {
         let formattedExpiry = value.toString().replace(/\D/g, '');
@@ -149,8 +149,9 @@ function DeliveryPayment() {
     }));
   };
 
+
   const handleRequest = () => {
-    const errorList = validatePaymentInputs(paymentInfo);
+    const errorList = validatePaymentInputs(paymentInfo); 
     setErrors(errorList);
 
     if (errorList.length === 0) {
@@ -164,6 +165,7 @@ function DeliveryPayment() {
       navigate('/trackOrder');
     }
   };
+
 
   return (
     <div id='formContainer'>

@@ -24,6 +24,7 @@ type BookingInfo = {
   phone: string,
   id:number
 }
+
 const generateRandomId = () => Math.floor(10000 + Math.random() * 90000);
 
 function Booking() {
@@ -53,20 +54,22 @@ function Booking() {
   }, []);
 
   const handleInputChange = (id: string, value: string | number) => {
-    setBookingInfo((prevState) => ({
-      ...prevState,
-      [id === 'start' || id === 'end' ? 'time' : id === 'adults' || id === 'kids' ? 'seats' : id]: {
-        ...(id === 'start' || id === 'end' ? prevState.time : id === 'adults' || id === 'kids' ? prevState.seats : prevState),
-        [id]: value,
-      },
-    }));
+    setBookingInfo((prevState) => {
+      if (id === 'start' || id === 'end') {
+        return { ...prevState, time: { ...prevState.time, [id]: value } };
+      } else if (id === 'adults' || id === 'kids') {
+        return { ...prevState, seats: { ...prevState.seats, [id]: value } };
+      } else {
+        return { ...prevState, [id]: value };
+      }
+    });
   };
-  
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (validateBookingInputs(bookingInfo,setErrors)) {
+    if (validateBookingInputs(bookingInfo, setErrors)) {
       localStorage.setItem('bookingInfo', JSON.stringify(bookingInfo));
       setConfirmed(true);
     }
