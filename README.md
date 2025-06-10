@@ -1,27 +1,29 @@
-# React + TypeScript + Vite
+# 🍽️ Simulación de Página de Restaurante
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto simula una página web funcional para un restaurante, incluyendo un sistema de reservas, catálogo con opción de delivery y seguimiento de pedidos. Está pensado para reflejar necesidades reales de un negocio gastronómico.
 
-Currently, two official plugins are available:
+## 🌐 Sitio en producción
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔗 [https://alexanderustra.github.io/Reservation-App/](https://alexanderustra.github.io/Reservation-App/)
 
-## Expanding the ESLint configuration
+## ⚙️ Tecnologías utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** + **TypeScript**
+- **Vite** como bundler
+- **CSS Modules** para estilos modulares
+- **LocalStorage** para persistencia de datos
 
-- Configure the top-level `parserOptions` property like this:
+## ✨ Características principales
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- 🧾 Sistema de **reservas** con validaciones dinámicas
+- 🍔 **Catálogo** de productos con filtros e ingredientes opcionales
+- 🚚 Simulación de **deliveries** con seguimiento de estado de órdenes
+- 📱 Diseño adaptable a distintos tamaños de pantalla
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🧪 Instalación local
+
+```bash
+git clone https://github.com/alexanderustra/Reservation-App.git
+cd Reservation-App
+npm install
+npm run dev
